@@ -30,7 +30,7 @@ public class LoginServiceImpl implements LoginService {
         if(loginModel.getSenha().equals(userEncontrado.getSenha())){
             return ResponseEntity.status(HttpStatus.OK).build();
         }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
 
