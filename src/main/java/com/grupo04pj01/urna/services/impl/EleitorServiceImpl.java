@@ -46,7 +46,6 @@ public class EleitorServiceImpl implements EleitorService {
        validarPresenca(eleitorPresenteModel);
 
        eleitorPresenteRepository.save(new EleitorPresenteModel(eleitorCadastrado));
-
     }
 
     public EleitorModel validarEleitor(Optional<EleitorModel> eleitorModel){
