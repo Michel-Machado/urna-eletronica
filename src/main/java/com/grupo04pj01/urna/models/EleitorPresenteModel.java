@@ -20,4 +20,7 @@ public class EleitorPresenteModel {
     @JoinColumn(name = "eleitor_id")
     public EleitorModel eleitorModel;
 
+    public EleitorPresenteModel(EleitorModel eleitorModel) {
+        this.eleitorModel = eleitorModel;
+    }
 }

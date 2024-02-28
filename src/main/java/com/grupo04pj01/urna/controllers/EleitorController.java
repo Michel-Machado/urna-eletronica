@@ -32,4 +32,10 @@ public class EleitorController {
        return ResponseEntity.status(HttpStatus.OK).body(eleitorModels);
     }
 
+    @GetMapping("/{ra}")
+    public ResponseEntity<Void> LiberaEleitor(@PathVariable String ra){
+        eleitorService.liberarEleitor(ra);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
