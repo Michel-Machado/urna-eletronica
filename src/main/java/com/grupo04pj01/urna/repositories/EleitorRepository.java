@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface EleitorRepository extends JpaRepository<EleitorModel, Long> {
 
-
+    Optional<EleitorModel> findEleitorModelByRa(String ra);
 }
