@@ -19,4 +19,9 @@ public class EleitorPresenteServiceImpl implements EleitorPresenteService{
         eleitorPresenteRepository.findAll();
         return null;
     }
+
+    @Override
+    public void cadastraEleitorPresente(EleitorPresenteModel eleitorPresenteModel) {
+         eleitorPresenteRepository.save(eleitorPresenteModel);
+    }
 }
