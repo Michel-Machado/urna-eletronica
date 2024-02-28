@@ -9,18 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "eleitores_presente_tb")
-public class EleitorPresenteModel {
+@Table(name = "votos_tb")
+public class VotosModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @ManyToOne
-    @JoinColumn(name = "eleitor_id")
-    public EleitorModel eleitorModel;
+    @JoinColumn(name = "candidato_id")
+    public CandidatoModel candidatoModel;
 
-    public EleitorPresenteModel(EleitorModel eleitorModel) {
-        this.eleitorModel = eleitorModel;
-    }
 }
