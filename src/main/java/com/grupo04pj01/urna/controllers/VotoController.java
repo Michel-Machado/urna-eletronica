@@ -30,4 +30,10 @@ public class VotoController {
         return totalVotos;
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> zerarUrna(){
+        votoService.deletarTodosVotos();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }

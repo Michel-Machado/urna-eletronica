@@ -29,4 +29,9 @@ public class VotoServiceImpl implements VotoService {
        Integer totalVotos= votoRepository.contarVotosByCandidatoId(candidatoId);
         return totalVotos;
     }
+
+    @Override
+    public void deletarTodosVotos() {
+        votoRepository.deleteAll();
+    }
 }
