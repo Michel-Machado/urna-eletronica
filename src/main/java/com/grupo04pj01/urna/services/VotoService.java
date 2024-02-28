@@ -13,5 +13,7 @@ public interface VotoService {
 
     Integer contarVotosById(Long candidatoId);
 
+    void deletarTodosVotos();
+
 
 }
