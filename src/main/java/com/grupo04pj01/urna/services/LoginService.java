@@ -10,4 +10,3 @@ public interface LoginService {
 
     LoginModel criaLogin(LoginModel loginModel);
 }
-
