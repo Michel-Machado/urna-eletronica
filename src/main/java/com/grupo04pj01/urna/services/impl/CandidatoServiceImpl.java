@@ -1,5 +1,6 @@
 package com.grupo04pj01.urna.services.impl;
 
+import com.grupo04pj01.urna.exceptions.NotFoundException;
 import com.grupo04pj01.urna.models.CandidatoModel;
 import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.repositories.CandidatoRepository;
@@ -44,7 +45,7 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     CandidatoModel validarOptional(Optional<CandidatoModel> optional){
-        if (optional.isEmpty()) throw new RuntimeException("Candidato Não Encontrado");
+        if (optional.isEmpty()) throw new NotFoundException("Candidato Não Encontrado");
         return optional.get();
 
     }
