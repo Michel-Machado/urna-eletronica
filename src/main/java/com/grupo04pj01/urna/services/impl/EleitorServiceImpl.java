@@ -1,5 +1,7 @@
 package com.grupo04pj01.urna.services.impl;
 
+import com.grupo04pj01.urna.exceptions.BusinessException;
+import com.grupo04pj01.urna.exceptions.NotFoundException;
 import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.models.EleitorPresenteModel;
 import com.grupo04pj01.urna.models.LoginModel;
@@ -49,11 +51,11 @@ public class EleitorServiceImpl implements EleitorService {
     }
 
     public EleitorModel validarEleitor(Optional<EleitorModel> eleitorModel){
-        if (eleitorModel.isEmpty()) throw new RuntimeException("Eleitor não cadastrado");
+        if (eleitorModel.isEmpty()) throw new NotFoundException("Eleitor não cadastrado");
 
         return eleitorModel.get();
     }    public void validarPresenca(Optional<EleitorPresenteModel> eleitorModel){
-        if (eleitorModel.isPresent()) throw new RuntimeException("Eleitor já votou");
+        if (eleitorModel.isPresent()) throw new BusinessException("Eleitor já votou");
 
     }
 
