@@ -4,15 +4,10 @@ import com.grupo04pj01.urna.exceptions.BusinessException;
 import com.grupo04pj01.urna.exceptions.NotFoundException;
 import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.models.EleitorPresenteModel;
-import com.grupo04pj01.urna.models.LoginModel;
 import com.grupo04pj01.urna.repositories.EleitorPresenteRepository;
 import com.grupo04pj01.urna.repositories.EleitorRepository;
-import com.grupo04pj01.urna.repositories.LoginRepository;
 import com.grupo04pj01.urna.services.EleitorService;
-import com.grupo04pj01.urna.services.LoginService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
