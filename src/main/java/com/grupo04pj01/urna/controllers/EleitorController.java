@@ -1,9 +1,7 @@
 package com.grupo04pj01.urna.controllers;
 
 import com.grupo04pj01.urna.models.EleitorModel;
-import com.grupo04pj01.urna.models.LoginModel;
 import com.grupo04pj01.urna.services.EleitorService;
-import com.grupo04pj01.urna.services.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
