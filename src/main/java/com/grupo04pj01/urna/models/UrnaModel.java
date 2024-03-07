@@ -4,17 +4,18 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-@Data
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+@Entity
+@Table(name = "urna_tb")
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "login_tb")
-public class LoginModel {
+@Data
+public class UrnaModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String usuario;
-    private String senha;
 
+    private Boolean isUrnaLiberada;
 }
