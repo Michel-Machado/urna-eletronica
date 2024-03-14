@@ -1,5 +1,6 @@
 package com.grupo04pj01.urna.controllers;
 
+import com.grupo04pj01.urna.DTO.BuscaCandidatoDTO;
 import com.grupo04pj01.urna.DTO.CandidatoVotosRecebidosDTO;
 import com.grupo04pj01.urna.DTO.VotoDTO;
 import com.grupo04pj01.urna.models.CandidatoModel;
@@ -21,7 +22,7 @@ public class VotoController {
     private final VotoService votoService;
 
     @PostMapping
-    public ResponseEntity<Void> votar(@RequestBody VotoDTO chapa){
+    public ResponseEntity<Void> votar(@RequestBody BuscaCandidatoDTO chapa){
      votoService.votar(chapa);
      return ResponseEntity.status(HttpStatus.CREATED).build();
     }

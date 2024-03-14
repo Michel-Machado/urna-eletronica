@@ -1,5 +1,6 @@
 package com.grupo04pj01.urna.services;
 
+import com.grupo04pj01.urna.DTO.BuscaCandidatoDTO;
 import com.grupo04pj01.urna.DTO.CandidatoVotosRecebidosDTO;
 import com.grupo04pj01.urna.DTO.VotoDTO;
 import com.grupo04pj01.urna.models.EleitorModel;
@@ -11,7 +12,7 @@ import java.util.List;
 @Service
 public interface VotoService {
 
-    void votar(VotoDTO chapa);
+    void votar(BuscaCandidatoDTO votoDTO);
 
     List<CandidatoVotosRecebidosDTO> contarVotosById();
 

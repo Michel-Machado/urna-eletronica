@@ -1,5 +1,6 @@
 package com.grupo04pj01.urna.controllers;
 
+import com.grupo04pj01.urna.DTO.BuscaCandidatoDTO;
 import com.grupo04pj01.urna.models.CandidatoModel;
 import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.services.CandidatoService;
@@ -30,9 +31,10 @@ public class CadidatoController {
        return ResponseEntity.status(HttpStatus.OK).body(eleitorModels);
     }
 
-    @GetMapping("/{chapa}")
-    public CandidatoModel buscaCandidatoByChapa(@PathVariable String chapa){
-        CandidatoModel candidatoModel= candidatoService.buscaCandidatoByChapa(chapa);
+    @PostMapping ("/{chapa}")
+    public CandidatoModel buscaCandidatoByChapa(@RequestBody BuscaCandidatoDTO buscaCandidatoDTO){
+
+        CandidatoModel candidatoModel= candidatoService.buscaCandidatoByChapa(buscaCandidatoDTO);
         return candidatoModel;
     }
 

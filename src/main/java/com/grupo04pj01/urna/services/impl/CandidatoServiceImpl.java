@@ -1,5 +1,6 @@
 package com.grupo04pj01.urna.services.impl;
 
+import com.grupo04pj01.urna.DTO.BuscaCandidatoDTO;
 import com.grupo04pj01.urna.exceptions.NotFoundException;
 import com.grupo04pj01.urna.models.CandidatoModel;
 import com.grupo04pj01.urna.models.EleitorModel;
@@ -31,8 +32,8 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public CandidatoModel buscaCandidatoByChapa(String chapa) {
-      Optional<CandidatoModel> candidatoModel =  candidatoRepository.findByChapa(chapa);
+    public CandidatoModel buscaCandidatoByChapa(BuscaCandidatoDTO candidatoDTO) {
+      Optional<CandidatoModel> candidatoModel =  candidatoRepository.findByChapa(candidatoDTO.getChapa());
       CandidatoModel model= validarOptional(candidatoModel);
         return model;
     }

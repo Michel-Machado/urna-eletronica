@@ -1,5 +1,6 @@
 package com.grupo04pj01.urna.services.impl;
 
+import com.grupo04pj01.urna.DTO.BuscaCandidatoDTO;
 import com.grupo04pj01.urna.DTO.CandidatoVotosRecebidosDTO;
 import com.grupo04pj01.urna.DTO.VotoDTO;
 import com.grupo04pj01.urna.models.CandidatoModel;
@@ -25,10 +26,10 @@ public class VotoServiceImpl implements VotoService {
 
 
     @Override
-    public void votar(VotoDTO chapa) {
+    public void votar(BuscaCandidatoDTO votoDTO) {
        if (!urnaService.verificaUrna()) throw new RuntimeException("Urna Bloqueada");
 
-       CandidatoModel candidato = candidatoService.buscaCandidatoByChapa(chapa.getChapa());
+       CandidatoModel candidato = candidatoService.buscaCandidatoByChapa(votoDTO);
 
        votoRepository.save(new VotosModel(candidato));
         urnaService.alterarStatusUrna(false);
@@ -38,8 +39,6 @@ public class VotoServiceImpl implements VotoService {
     @Override
     public List<CandidatoVotosRecebidosDTO> contarVotosById() {
       List<CandidatoModel> candidatosEncontrados=  candidatoService.buscarCandidato();
-      CandidatoVotosRecebidosDTO votosRecebidosDTO = new CandidatoVotosRecebidosDTO();
-
       List<CandidatoVotosRecebidosDTO> listDTO= new ArrayList<>();
 
         for (CandidatoModel candidato: candidatosEncontrados) {
@@ -47,12 +46,7 @@ public class VotoServiceImpl implements VotoService {
            String nome = candidato.getNome();
 
            listDTO.add(new CandidatoVotosRecebidosDTO(nome,votos));
-
-
         }
-
-
-
 
         return listDTO;
     }
@@ -61,6 +55,5 @@ public class VotoServiceImpl implements VotoService {
     public void deletarTodosVotos() {
         votoRepository.deleteAll();
     }
-
 
 }

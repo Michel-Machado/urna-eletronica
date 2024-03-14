@@ -1,5 +1,7 @@
 package com.grupo04pj01.urna.services;
 
+import com.grupo04pj01.urna.DTO.BuscaCandidatoDTO;
+import com.grupo04pj01.urna.DTO.VotoDTO;
 import com.grupo04pj01.urna.models.CandidatoModel;
 import com.grupo04pj01.urna.models.EleitorModel;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,6 @@ public interface CandidatoService {
 
     List<CandidatoModel> buscarCandidato();
 
-    CandidatoModel buscaCandidatoByChapa(String chapa);
-
+    CandidatoModel buscaCandidatoByChapa(BuscaCandidatoDTO candidatoDTO);
     void deletarCandidatoById(Long candidatoId);
 }
