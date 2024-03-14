@@ -1,5 +1,7 @@
 package com.grupo04pj01.urna.controllers;
 
+import com.grupo04pj01.urna.DTO.CandidatoVotosRecebidosDTO;
+import com.grupo04pj01.urna.DTO.VotoDTO;
 import com.grupo04pj01.urna.models.CandidatoModel;
 import com.grupo04pj01.urna.models.VotosModel;
 import com.grupo04pj01.urna.services.CandidatoService;
@@ -19,16 +21,16 @@ public class VotoController {
     private final VotoService votoService;
 
     @PostMapping
-    public ResponseEntity<Void> votar(@RequestBody VotosModel votosModel){
-     votoService.votar(votosModel);
+    public ResponseEntity<Void> votar(@RequestBody VotoDTO chapa){
+     votoService.votar(chapa);
      return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/{id}")
-    public Integer buscaVotosPorCandidato(@PathVariable Long id){
-       Integer totalVotos= votoService.contarVotosById(id);
+    @GetMapping()
+    public List<CandidatoVotosRecebidosDTO> buscaVotosPorCandidato(){
+       List<CandidatoVotosRecebidosDTO> lista= votoService.contarVotosById();
 
-        return totalVotos;
+        return lista;
     }
 
     @DeleteMapping

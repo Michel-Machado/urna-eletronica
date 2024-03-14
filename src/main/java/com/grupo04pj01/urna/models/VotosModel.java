@@ -20,4 +20,7 @@ public class VotosModel {
     @JoinColumn(name = "candidato_id")
     public CandidatoModel candidatoModel;
 
+    public VotosModel(CandidatoModel candidatoModel) {
+        this.candidatoModel = candidatoModel;
+    }
 }

@@ -17,5 +17,5 @@ public class UrnaModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Boolean isUrnaLiberada;
+    private Boolean isUrnaLiberada =false;
 }

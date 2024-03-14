@@ -6,6 +6,7 @@ import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.models.EleitorPresenteModel;
 import com.grupo04pj01.urna.repositories.EleitorPresenteRepository;
 import com.grupo04pj01.urna.repositories.EleitorRepository;
+import com.grupo04pj01.urna.repositories.UrnaRepository;
 import com.grupo04pj01.urna.services.EleitorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class EleitorServiceImpl implements EleitorService {
 
     private final EleitorRepository eleitorRepository;
     private final EleitorPresenteRepository eleitorPresenteRepository;
+    private final UrnaServiceImpl urnaService;
 
 
 
@@ -43,6 +45,8 @@ public class EleitorServiceImpl implements EleitorService {
        validarPresenca(eleitorPresenteModel);
 
        eleitorPresenteRepository.save(new EleitorPresenteModel(eleitorCadastrado));
+       urnaService.alterarStatusUrna(true);
+
     }
 
     public EleitorModel validarEleitor(Optional<EleitorModel> eleitorModel){

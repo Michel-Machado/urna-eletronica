@@ -31,8 +31,8 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public CandidatoModel buscaCandidatoById(Long candidatoId) {
-      Optional<CandidatoModel> candidatoModel =  candidatoRepository.findById(candidatoId);
+    public CandidatoModel buscaCandidatoByChapa(String chapa) {
+      Optional<CandidatoModel> candidatoModel =  candidatoRepository.findByChapa(chapa);
       CandidatoModel model= validarOptional(candidatoModel);
         return model;
     }
