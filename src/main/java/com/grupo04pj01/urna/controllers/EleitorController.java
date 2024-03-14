@@ -30,10 +30,16 @@ public class EleitorController {
        return ResponseEntity.status(HttpStatus.OK).body(eleitorModels);
     }
 
-    @GetMapping("/{ra}")
-    public ResponseEntity<Void> LiberaEleitor(@PathVariable String ra){
+    @PostMapping("verificar/{ra}")
+    public ResponseEntity<Void> liberaEleitor(@PathVariable String ra){
         eleitorService.liberarEleitor(ra);
 
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("/{ra}")
+    public ResponseEntity<EleitorModel> buscaEleitorByRa(@PathVariable String ra){
+      EleitorModel eleitor=  eleitorService.buscaEleitorByRa(ra);
+        return ResponseEntity.status(HttpStatus.OK).body(eleitor);
     }
 }

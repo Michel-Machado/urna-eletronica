@@ -13,4 +13,6 @@ public interface EleitorService {
     List<EleitorModel> buscarEleitores();
 
     void liberarEleitor(String ra);
+
+    EleitorModel buscaEleitorByRa(String ra);
 }
