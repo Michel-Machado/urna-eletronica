@@ -16,6 +16,7 @@ public class CandidatoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public String foto;
+    public String chapa;
     public String nome;
 
 }
