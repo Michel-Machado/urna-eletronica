@@ -54,4 +54,17 @@ public class EleitorServiceImpl implements EleitorService {
 
     }
 
+    @Override
+    public EleitorModel buscaEleitorByRa(String ra) {
+        Optional<EleitorModel> eleitor= eleitorRepository.findEleitorModelByRa(ra);
+        EleitorModel model = validaEleitor(eleitor);
+
+        return model;
+    }
+
+    private EleitorModel validaEleitor(Optional<EleitorModel> eleitorModelOptional){
+        if (eleitorModelOptional.isEmpty()) throw new RuntimeException("Eleitor não encontrado");
+
+        return eleitorModelOptional.get();
+    }
 }
