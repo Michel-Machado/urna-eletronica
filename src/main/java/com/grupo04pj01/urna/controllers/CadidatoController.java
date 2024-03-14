@@ -30,9 +30,9 @@ public class CadidatoController {
        return ResponseEntity.status(HttpStatus.OK).body(eleitorModels);
     }
 
-    @GetMapping("/{id}")
-    public CandidatoModel buscaCandidatoById(@PathVariable Long id){
-        CandidatoModel candidatoModel= candidatoService.buscaCandidatoById(id);
+    @GetMapping("/{chapa}")
+    public CandidatoModel buscaCandidatoByChapa(@PathVariable String chapa){
+        CandidatoModel candidatoModel= candidatoService.buscaCandidatoByChapa(chapa);
         return candidatoModel;
     }
 

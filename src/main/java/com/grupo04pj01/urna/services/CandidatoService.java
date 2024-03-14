@@ -13,7 +13,7 @@ public interface CandidatoService {
 
     List<CandidatoModel> buscarCandidato();
 
-    CandidatoModel buscaCandidatoById(Long candidatoId);
+    CandidatoModel buscaCandidatoByChapa(String chapa);
 
     void deletarCandidatoById(Long candidatoId);
 }
