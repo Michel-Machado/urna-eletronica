@@ -22,6 +22,7 @@ public class VotoServiceImpl implements VotoService {
     @Override
     public void votar(VotosModel votosModel) {
         votoRepository.save(votosModel);
+
     }
 
     @Override
