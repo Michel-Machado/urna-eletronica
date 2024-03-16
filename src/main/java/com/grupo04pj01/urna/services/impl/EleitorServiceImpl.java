@@ -59,11 +59,22 @@ public class EleitorServiceImpl implements EleitorService {
     }
 
     @Override
+    public void deleteByRa(String ra) {
+       EleitorModel model= validaEleitor(eleitorRepository.findEleitorModelByRa(ra));
+       eleitorRepository.delete(model);
+    }
+
+    @Override
     public EleitorModel buscaEleitorByRa(String ra) {
         Optional<EleitorModel> eleitor= eleitorRepository.findEleitorModelByRa(ra);
         EleitorModel model = validaEleitor(eleitor);
 
         return model;
+    }
+
+    @Override
+    public void deleteAll() {
+        eleitorRepository.deleteAll();
     }
 
     private EleitorModel validaEleitor(Optional<EleitorModel> eleitorModelOptional){
