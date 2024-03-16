@@ -15,4 +15,8 @@ public interface EleitorService {
     void liberarEleitor(String ra);
 
     EleitorModel buscaEleitorByRa(String ra);
+
+    void deleteAll();
+
+    void deleteByRa(String ra);
 }

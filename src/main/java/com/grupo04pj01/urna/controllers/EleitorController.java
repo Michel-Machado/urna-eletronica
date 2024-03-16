@@ -43,4 +43,16 @@ public class EleitorController {
       EleitorModel eleitor=  eleitorService.buscaEleitorByRa(ra);
         return ResponseEntity.status(HttpStatus.OK).body(eleitor);
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deletaTodoseleitores(){
+        eleitorService.deleteAll();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/{ra}")
+    public ResponseEntity<Void> deletaEleitorById(@PathVariable String ra){
+        eleitorService.deleteByRa(ra);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
