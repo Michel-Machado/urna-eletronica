@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,12 +17,17 @@ public class EleitorPresenteServiceImpl implements EleitorPresenteService{
 
     @Override
     public List<EleitorPresenteModel> buscarEleitoresPresentes() {
-        eleitorPresenteRepository.findAll();
-        return null;
+
+        return eleitorPresenteRepository.findAll();
     }
 
     @Override
     public void cadastraEleitorPresente(EleitorPresenteModel eleitorPresenteModel) {
          eleitorPresenteRepository.save(eleitorPresenteModel);
+    }
+
+    @Override
+    public void limpaListaPresenca() {
+        eleitorPresenteRepository.deleteAll();
     }
 }

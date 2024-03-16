@@ -13,4 +13,6 @@ public interface EleitorPresenteService {
     List<EleitorPresenteModel> buscarEleitoresPresentes();
 
     void cadastraEleitorPresente(EleitorPresenteModel eleitorPresenteModel);
+
+    void limpaListaPresenca();
 }
