@@ -39,10 +39,14 @@ public class CandidatoServiceImpl implements CandidatoService {
     }
 
     @Override
-    public void deletarCandidatoById(Long candidatoId) {
-        Optional<CandidatoModel> candidatoModel= candidatoRepository.findById(candidatoId);
-        CandidatoModel model= validarOptional(candidatoModel);
+    public void deletarCandidatoByChapa(String chapa) {
+       CandidatoModel model = validarOptional(candidatoRepository.findByChapa(chapa));
         candidatoRepository.delete(model);
+    }
+
+    @Override
+    public void deleteAllCandidatos() {
+        candidatoRepository.deleteAll();
     }
 
     CandidatoModel validarOptional(Optional<CandidatoModel> optional){

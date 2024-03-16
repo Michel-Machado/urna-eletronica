@@ -16,5 +16,7 @@ public interface CandidatoService {
     List<CandidatoModel> buscarCandidato();
 
     CandidatoModel buscaCandidatoByChapa(BuscaCandidatoDTO candidatoDTO);
-    void deletarCandidatoById(Long candidatoId);
+    void deletarCandidatoByChapa(String chapa);
+
+    void deleteAllCandidatos();
 }

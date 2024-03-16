@@ -38,4 +38,16 @@ public class CadidatoController {
         return candidatoModel;
     }
 
+    @DeleteMapping
+    public ResponseEntity<Void> deletarTodosCandidatos(){
+        candidatoService.deleteAllCandidatos();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("{chapa}")
+    public ResponseEntity<Void> deletarCandidatoByChapa(@PathVariable String chapa){
+        candidatoService.deletarCandidatoByChapa(chapa);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }
