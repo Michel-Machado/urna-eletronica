@@ -23,6 +23,7 @@ public class CandidatoServiceImpl implements CandidatoService {
 
     @Override
     public CandidatoModel criarCandidato(CandidatoModel candidatoModel) {
+        verificarChapaDisponivel(candidatoModel);
         return candidatoRepository.save(candidatoModel);
     }
 
@@ -53,5 +54,11 @@ public class CandidatoServiceImpl implements CandidatoService {
         if (optional.isEmpty()) throw new NotFoundException("Candidato Não Encontrado");
         return optional.get();
 
+    }
+
+    private void verificarChapaDisponivel(CandidatoModel candidatoModel){
+        String chapa= candidatoModel.getChapa();
+        Optional<CandidatoModel> candidatoOptional = candidatoRepository.findByChapa(chapa);
+        if (!candidatoOptional.isEmpty()) throw new NotFoundException("Chapa já cadastrada");
     }
 }
