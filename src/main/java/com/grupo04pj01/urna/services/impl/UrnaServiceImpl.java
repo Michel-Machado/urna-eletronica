@@ -38,7 +38,7 @@ public class UrnaServiceImpl implements UrnaService {
     private UrnaModel validar(Optional<UrnaModel> objeto) {
         if (objeto.isPresent()) {
             return objeto.get();
-        } else throw new RuntimeException("ID nao encontrado");
+        } else throw new RuntimeException("status nao iniciado");
 
     }
 }
