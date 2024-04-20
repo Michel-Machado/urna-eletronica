@@ -54,7 +54,9 @@ public class EleitorServiceImpl implements EleitorService {
         if (eleitorModel.isEmpty()) throw new NotFoundException("Eleitor não cadastrado");
 
         return eleitorModel.get();
-    }    public void validarPresenca(Optional<EleitorPresenteModel> eleitorModel){
+    }
+
+    public void validarPresenca(Optional<EleitorPresenteModel> eleitorModel){
         if (eleitorModel.isPresent()) throw new BusinessException("Eleitor já votou");
 
     }
