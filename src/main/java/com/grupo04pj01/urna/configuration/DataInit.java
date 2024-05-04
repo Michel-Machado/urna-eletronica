@@ -20,6 +20,8 @@ public class DataInit implements CommandLineRunner {
         if (urnaRepository.count() == 0) {
             UrnaModel urna = new UrnaModel(1L,false);
             urnaRepository.save(urna);
+        }else {
+            urnaRepository.findById(1L).get().setIsUrnaLiberada(false);
         }
 
         if (!candidatoRepository.findByChapa("0").isPresent()){
