@@ -48,6 +48,10 @@ public class CandidatoServiceImpl implements CandidatoService {
     @Override
     public void deleteAllCandidatos() {
         candidatoRepository.deleteAll();
+        CandidatoModel brancos= new CandidatoModel();
+        brancos.setNome("Brancos & Nulos");
+        brancos.setChapa("0");
+        candidatoRepository.save(brancos);
     }
 
     CandidatoModel validarOptional(Optional<CandidatoModel> optional){
