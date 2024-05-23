@@ -15,6 +15,7 @@ public class CandidatoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
+    @Column(columnDefinition = "LONGTEXT")
     public String foto;
     public String chapa;
     public String nome;
