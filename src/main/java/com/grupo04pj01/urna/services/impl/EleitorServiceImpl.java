@@ -39,6 +39,8 @@ public class EleitorServiceImpl implements EleitorService {
 
     @Override
     public void liberarEleitor(String ra) {
+        if (urnaService.verificaUrna())
+            return;
        Optional<EleitorModel> eleitorModel= eleitorRepository.findEleitorModelByRa(ra);
        EleitorModel eleitorCadastrado= validarEleitor(eleitorModel);
 
@@ -68,7 +70,7 @@ public class EleitorServiceImpl implements EleitorService {
     }
 
     @Override
-    public EleitorModel buscaEleitorByRa(String ra) {
+    public EleitorModel buscaEleitorByRa(String ra){
         Optional<EleitorModel> eleitor= eleitorRepository.findEleitorModelByRa(ra);
         EleitorModel model = validaEleitor(eleitor);
 
@@ -81,7 +83,7 @@ public class EleitorServiceImpl implements EleitorService {
     }
 
     private EleitorModel validaEleitor(Optional<EleitorModel> eleitorModelOptional){
-        if (eleitorModelOptional.isEmpty()) throw new RuntimeException("Eleitor não encontrado");
+        if (eleitorModelOptional.isEmpty()) throw new NotFoundException("Eleitor não encontrado");
 
         return eleitorModelOptional.get();
     }
@@ -89,6 +91,6 @@ public class EleitorServiceImpl implements EleitorService {
     private void verificarRaDisponivel(EleitorModel eleitorModel){
         String ra= eleitorModel.getRa();
         Optional<EleitorModel> optionalEleitor = eleitorRepository.findEleitorModelByRa(ra);
-        if (!optionalEleitor.isEmpty()) throw new NotFoundException("RA já cadastrado");
+        if (!optionalEleitor.isEmpty()) throw new BusinessException("RA já cadastrado");
     }
 }
