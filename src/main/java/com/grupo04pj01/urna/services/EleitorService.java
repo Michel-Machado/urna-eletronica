@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface EleitorService {
 
-    EleitorModel criaEleitor(EleitorModel eleitorModel);
+    List<EleitorModel> criaEleitor(List<EleitorModel> eleitorModel );
 
     List<EleitorModel> buscarEleitores();
 

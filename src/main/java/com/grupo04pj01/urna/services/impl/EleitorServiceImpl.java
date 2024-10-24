@@ -25,10 +25,14 @@ public class EleitorServiceImpl implements EleitorService {
 
 
     @Override
-    public EleitorModel criaEleitor(EleitorModel eleitorModel) {
-        verificarRaDisponivel(eleitorModel);
-        EleitorModel eleitor= eleitorRepository.save(eleitorModel);
-        return eleitor;
+    public List<EleitorModel> criaEleitor(List<EleitorModel> eleitorModel) {
+
+        for (EleitorModel eleitor: eleitorModel) {
+            verificarRaDisponivel(eleitor);
+            eleitorRepository.save(eleitor);
+        }
+        return eleitorModel;
+
     }
 
     @Override
@@ -91,6 +95,6 @@ public class EleitorServiceImpl implements EleitorService {
     private void verificarRaDisponivel(EleitorModel eleitorModel){
         String ra= eleitorModel.getRa();
         Optional<EleitorModel> optionalEleitor = eleitorRepository.findEleitorModelByRa(ra);
-        if (!optionalEleitor.isEmpty()) throw new BusinessException("RA já cadastrado");
+        if (!optionalEleitor.isEmpty()) throw new BusinessException("RA: "+ra+" já cadastrado");
     }
 }

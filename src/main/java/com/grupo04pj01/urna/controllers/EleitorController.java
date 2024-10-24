@@ -17,8 +17,8 @@ public class EleitorController {
     private final EleitorService eleitorService;
 
     @PostMapping
-    public ResponseEntity<EleitorModel> cadastraEleitor(@RequestBody EleitorModel eleitorModel){
-      EleitorModel model=eleitorService.criaEleitor(eleitorModel);
+    public ResponseEntity<List<EleitorModel>> cadastraEleitor(@RequestBody List<EleitorModel> eleitorModel){
+        List<EleitorModel> model=eleitorService.criaEleitor(eleitorModel);
 
         return  ResponseEntity.status(HttpStatus.CREATED).body(model);
 
