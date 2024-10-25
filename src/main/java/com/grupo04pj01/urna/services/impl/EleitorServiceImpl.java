@@ -1,16 +1,18 @@
 package com.grupo04pj01.urna.services.impl;
 
+import com.grupo04pj01.urna.DTO.EleitoresNaoCadastradosDTO;
 import com.grupo04pj01.urna.exceptions.BusinessException;
+import com.grupo04pj01.urna.exceptions.EleitorCadastradoException;
 import com.grupo04pj01.urna.exceptions.NotFoundException;
 import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.models.EleitorPresenteModel;
 import com.grupo04pj01.urna.repositories.EleitorPresenteRepository;
 import com.grupo04pj01.urna.repositories.EleitorRepository;
-import com.grupo04pj01.urna.repositories.UrnaRepository;
 import com.grupo04pj01.urna.services.EleitorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,16 +23,25 @@ public class EleitorServiceImpl implements EleitorService {
     private final EleitorRepository eleitorRepository;
     private final EleitorPresenteRepository eleitorPresenteRepository;
     private final UrnaServiceImpl urnaService;
-
+    private List<String> eleitoresNaoCadastrados = new ArrayList<>();
+    private List<String> eleitoresCadastrados = new ArrayList<>();
 
 
     @Override
     public List<EleitorModel> criaEleitor(List<EleitorModel> eleitorModel) {
+        eleitoresNaoCadastrados.clear();
+        eleitoresCadastrados.clear();
+
 
         for (EleitorModel eleitor: eleitorModel) {
             verificarRaDisponivel(eleitor);
-            eleitorRepository.save(eleitor);
         }
+        if(!eleitoresNaoCadastrados.isEmpty()){
+            throw new EleitorCadastradoException("Eleitores não cadastrados:" + eleitoresNaoCadastrados + " Eleitores cadastrados:" + eleitoresCadastrados);
+        }
+        eleitoresNaoCadastrados.clear();
+        eleitoresCadastrados.clear();
+
         return eleitorModel;
 
     }
@@ -93,8 +104,16 @@ public class EleitorServiceImpl implements EleitorService {
     }
 
     private void verificarRaDisponivel(EleitorModel eleitorModel){
-        String ra= eleitorModel.getRa();
-        Optional<EleitorModel> optionalEleitor = eleitorRepository.findEleitorModelByRa(ra);
-        if (!optionalEleitor.isEmpty()) throw new BusinessException("RA: "+ra+" já cadastrado");
+
+        Optional<EleitorModel> optionalEleitor = eleitorRepository.findEleitorModelByRa(eleitorModel.getRa());
+
+        if (optionalEleitor.isPresent() ){
+            EleitoresNaoCadastradosDTO eleitorNCadastrado = new EleitoresNaoCadastradosDTO(eleitorModel.getRa(), eleitorModel.getNome());
+            eleitoresNaoCadastrados.add(eleitorNCadastrado.getRa() + ": " + eleitorNCadastrado.getNome());
+        }else {
+            EleitoresNaoCadastradosDTO eleitorCadastrado = new EleitoresNaoCadastradosDTO(eleitorModel.getRa(), eleitorModel.getNome());
+            eleitoresCadastrados.add(eleitorCadastrado.getRa() + ": " + eleitorCadastrado.getNome());
+            eleitorRepository.save(eleitorModel);
+        }
     }
 }
