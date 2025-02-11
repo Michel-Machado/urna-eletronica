@@ -19,4 +19,6 @@ public interface EleitorService {
     void deleteAll();
 
     void deleteByRa(String ra);
+
+    EleitorModel update(EleitorModel eleitorModel);
 }

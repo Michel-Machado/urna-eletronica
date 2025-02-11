@@ -50,4 +50,12 @@ public class CadidatoController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    @PutMapping
+    public ResponseEntity<CandidatoModel> editarCandidato(@RequestBody CandidatoModel candidato){
+        CandidatoModel candidatoAlterado = candidatoService.update(candidato);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(candidatoAlterado);
+    }
+
+
+
 }

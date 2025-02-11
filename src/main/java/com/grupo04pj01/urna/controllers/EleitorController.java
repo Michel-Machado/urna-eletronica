@@ -20,7 +20,7 @@ public class EleitorController {
     public ResponseEntity<List<EleitorModel>> cadastraEleitor(@RequestBody List<EleitorModel> eleitorModel){
         List<EleitorModel> model=eleitorService.criaEleitor(eleitorModel);
 
-        return  ResponseEntity.status(HttpStatus.CREATED).body(model);
+        return  ResponseEntity.status(HttpStatus.CREATED).header("Access-Control-Allow-Origin", "*").body(model);
 
     }
 
@@ -54,5 +54,11 @@ public class EleitorController {
     public ResponseEntity<Void> deletaEleitorById(@PathVariable String ra){
         eleitorService.deleteByRa(ra);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping
+    public ResponseEntity<EleitorModel> atualizaEleitor(@RequestBody EleitorModel eleitorModel){
+        EleitorModel eleitorAlterado = eleitorService.update(eleitorModel);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(eleitorAlterado);
     }
 }

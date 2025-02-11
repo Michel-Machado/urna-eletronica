@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -37,7 +38,7 @@ public class EleitorServiceImpl implements EleitorService {
             verificarRaDisponivel(eleitor);
         }
         if(!eleitoresNaoCadastrados.isEmpty()){
-            throw new EleitorCadastradoException("Eleitores não cadastrados:" + eleitoresNaoCadastrados + " Eleitores cadastrados:" + eleitoresCadastrados);
+            throw new BusinessException("Eleitores não cadastrados:" + eleitoresNaoCadastrados + " Eleitores cadastrados:" + eleitoresCadastrados);
         }
         eleitoresNaoCadastrados.clear();
         eleitoresCadastrados.clear();
@@ -85,6 +86,18 @@ public class EleitorServiceImpl implements EleitorService {
     }
 
     @Override
+    public EleitorModel update(EleitorModel eleitorEditado) {
+        EleitorModel eleitorVerificado = validaUpdadeEleitor(eleitorEditado);
+
+        eleitorVerificado.setNome(eleitorEditado.getNome());
+        eleitorVerificado.setRa(eleitorEditado.getRa());
+
+        eleitorRepository.save(eleitorVerificado);
+
+        return eleitorVerificado;
+    }
+
+    @Override
     public EleitorModel buscaEleitorByRa(String ra){
         Optional<EleitorModel> eleitor= eleitorRepository.findEleitorModelByRa(ra);
         EleitorModel model = validaEleitor(eleitor);
@@ -116,4 +129,15 @@ public class EleitorServiceImpl implements EleitorService {
             eleitorRepository.save(eleitorModel);
         }
     }
+
+    private EleitorModel validaUpdadeEleitor(EleitorModel eleitorModel){
+        Optional<EleitorModel> eleitorEncontrado = eleitorRepository.findById(eleitorModel.getId());
+        if (eleitorEncontrado.isEmpty()) throw new NotFoundException("Eleitor não encontrado");
+
+        Optional<EleitorModel> raEmUso = eleitorRepository.findEleitorModelByRa(eleitorModel.ra);
+        if (raEmUso.isPresent() && (!Objects.equals(raEmUso.get().getId(), eleitorModel.getId()))) throw new BusinessException("RA em uso");
+
+        return eleitorEncontrado.get();
+    }
+
 }

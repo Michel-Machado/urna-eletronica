@@ -1,17 +1,17 @@
 package com.grupo04pj01.urna.services.impl;
 
 import com.grupo04pj01.urna.DTO.BuscaCandidatoDTO;
+import com.grupo04pj01.urna.exceptions.BusinessException;
 import com.grupo04pj01.urna.exceptions.NotFoundException;
 import com.grupo04pj01.urna.models.CandidatoModel;
 import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.repositories.CandidatoRepository;
-import com.grupo04pj01.urna.repositories.EleitorRepository;
 import com.grupo04pj01.urna.services.CandidatoService;
-import com.grupo04pj01.urna.services.EleitorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -54,7 +54,20 @@ public class CandidatoServiceImpl implements CandidatoService {
         candidatoRepository.save(brancos);
     }
 
-    CandidatoModel validarOptional(Optional<CandidatoModel> optional){
+    @Override
+    public CandidatoModel update(CandidatoModel candidatoEditado) {
+        CandidatoModel candidatoVerificado = validaUpdadeCandidato(candidatoEditado);
+
+        candidatoVerificado.setNome(candidatoEditado.getNome());
+        candidatoVerificado.setChapa(candidatoEditado.getChapa());
+        candidatoVerificado.setFoto(candidatoEditado.getFoto());
+
+        candidatoRepository.save(candidatoVerificado);
+
+        return candidatoVerificado;
+    }
+
+    private CandidatoModel validarOptional(Optional<CandidatoModel> optional){
         if (optional.isEmpty()) throw new NotFoundException("Candidato Não Encontrado");
         return optional.get();
 
@@ -65,4 +78,18 @@ public class CandidatoServiceImpl implements CandidatoService {
         Optional<CandidatoModel> candidatoOptional = candidatoRepository.findByChapa(chapa);
         if (!candidatoOptional.isEmpty()) throw new NotFoundException("Chapa já cadastrada");
     }
+
+    private CandidatoModel validaUpdadeCandidato(CandidatoModel candidatoModel){
+        Optional<CandidatoModel> candidatoEncontrado = candidatoRepository.findById(candidatoModel.getId());
+        if (candidatoEncontrado.isEmpty()) throw new NotFoundException("Candidato não encontrado");
+
+        Optional<CandidatoModel> chapaEmUso = candidatoRepository.findByChapa(candidatoModel.chapa);
+        if (chapaEmUso.isPresent() && (!Objects.equals(chapaEmUso.get().getId(), candidatoModel.getId()))) throw new BusinessException("Número de Chapa em uso");
+
+        return candidatoEncontrado.get();
+    }
+
+
+
+
 }

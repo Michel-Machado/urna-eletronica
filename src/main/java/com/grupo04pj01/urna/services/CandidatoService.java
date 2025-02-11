@@ -19,4 +19,6 @@ public interface CandidatoService {
     void deletarCandidatoByChapa(String chapa);
 
     void deleteAllCandidatos();
+
+    CandidatoModel update(CandidatoModel candidatoEditado);
 }
