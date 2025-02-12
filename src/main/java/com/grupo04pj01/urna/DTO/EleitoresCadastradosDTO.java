@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class EleitoresNaoCadastradosDTO {
+public class EleitoresCadastradosDTO {
     public String ra;
     public String nome;
 

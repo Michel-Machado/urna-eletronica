@@ -1,5 +1,6 @@
 package com.grupo04pj01.urna.controllers;
 
+import com.grupo04pj01.urna.DTO.ResponseCadastroEleitor;
 import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.services.EleitorService;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,9 @@ public class EleitorController {
     private final EleitorService eleitorService;
 
     @PostMapping
-    public ResponseEntity<List<EleitorModel>> cadastraEleitor(@RequestBody List<EleitorModel> eleitorModel){
-        List<EleitorModel> model=eleitorService.criaEleitor(eleitorModel);
-
-        return  ResponseEntity.status(HttpStatus.CREATED).header("Access-Control-Allow-Origin", "*").body(model);
+    public ResponseEntity<ResponseCadastroEleitor> cadastraEleitor(@RequestBody List<EleitorModel> eleitorModel){
+        ResponseCadastroEleitor response = eleitorService.criaEleitor(eleitorModel);
+        return  ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
 

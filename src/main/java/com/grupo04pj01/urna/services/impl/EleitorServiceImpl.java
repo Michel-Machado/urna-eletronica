@@ -1,8 +1,8 @@
 package com.grupo04pj01.urna.services.impl;
 
-import com.grupo04pj01.urna.DTO.EleitoresNaoCadastradosDTO;
+import com.grupo04pj01.urna.DTO.EleitoresCadastradosDTO;
+import com.grupo04pj01.urna.DTO.ResponseCadastroEleitor;
 import com.grupo04pj01.urna.exceptions.BusinessException;
-import com.grupo04pj01.urna.exceptions.EleitorCadastradoException;
 import com.grupo04pj01.urna.exceptions.NotFoundException;
 import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.models.EleitorPresenteModel;
@@ -24,12 +24,12 @@ public class EleitorServiceImpl implements EleitorService {
     private final EleitorRepository eleitorRepository;
     private final EleitorPresenteRepository eleitorPresenteRepository;
     private final UrnaServiceImpl urnaService;
-    private List<String> eleitoresNaoCadastrados = new ArrayList<>();
-    private List<String> eleitoresCadastrados = new ArrayList<>();
+    private List<EleitoresCadastradosDTO> eleitoresNaoCadastrados = new ArrayList<>();
+    private List<EleitoresCadastradosDTO> eleitoresCadastrados = new ArrayList<>();
 
 
     @Override
-    public List<EleitorModel> criaEleitor(List<EleitorModel> eleitorModel) {
+    public ResponseCadastroEleitor criaEleitor(List<EleitorModel> eleitorModel) {
         eleitoresNaoCadastrados.clear();
         eleitoresCadastrados.clear();
 
@@ -37,13 +37,14 @@ public class EleitorServiceImpl implements EleitorService {
         for (EleitorModel eleitor: eleitorModel) {
             verificarRaDisponivel(eleitor);
         }
-        if(!eleitoresNaoCadastrados.isEmpty()){
-            throw new BusinessException("Eleitores não cadastrados:" + eleitoresNaoCadastrados + " Eleitores cadastrados:" + eleitoresCadastrados);
-        }
-        eleitoresNaoCadastrados.clear();
-        eleitoresCadastrados.clear();
 
-        return eleitorModel;
+        ResponseCadastroEleitor response = new ResponseCadastroEleitor(eleitoresCadastrados,eleitoresNaoCadastrados);
+
+
+//        eleitoresNaoCadastrados.clear();
+//        eleitoresCadastrados.clear();
+
+        return response;
 
     }
 
@@ -121,11 +122,11 @@ public class EleitorServiceImpl implements EleitorService {
         Optional<EleitorModel> optionalEleitor = eleitorRepository.findEleitorModelByRa(eleitorModel.getRa());
 
         if (optionalEleitor.isPresent() ){
-            EleitoresNaoCadastradosDTO eleitorNCadastrado = new EleitoresNaoCadastradosDTO(eleitorModel.getRa(), eleitorModel.getNome());
-            eleitoresNaoCadastrados.add(eleitorNCadastrado.getRa() + ": " + eleitorNCadastrado.getNome());
+            EleitoresCadastradosDTO eleitorNCadastrado = new EleitoresCadastradosDTO(eleitorModel.getRa(), eleitorModel.getNome());
+            eleitoresNaoCadastrados.add(eleitorNCadastrado);
         }else {
-            EleitoresNaoCadastradosDTO eleitorCadastrado = new EleitoresNaoCadastradosDTO(eleitorModel.getRa(), eleitorModel.getNome());
-            eleitoresCadastrados.add(eleitorCadastrado.getRa() + ": " + eleitorCadastrado.getNome());
+            EleitoresCadastradosDTO eleitorCadastrado = new EleitoresCadastradosDTO(eleitorModel.getRa(), eleitorModel.getNome());
+            eleitoresCadastrados.add(eleitorCadastrado);
             eleitorRepository.save(eleitorModel);
         }
     }
