@@ -25,9 +25,10 @@ public class EleitorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EleitorModel>> buscaTodosEleitores(){
+    public ResponseEntity<List<EleitorModel>> buscaTodosEleitores(@RequestParam(required = false) String nome,
+                                                                  @RequestParam(required = false) String ra){
 
-       List<EleitorModel> eleitorModels= eleitorService.buscarEleitores();
+       List<EleitorModel> eleitorModels= eleitorService.buscarEleitores(nome,ra);
        return ResponseEntity.status(HttpStatus.OK).body(eleitorModels);
     }
 

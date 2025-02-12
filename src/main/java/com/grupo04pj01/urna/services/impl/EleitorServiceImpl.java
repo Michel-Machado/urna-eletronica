@@ -49,8 +49,8 @@ public class EleitorServiceImpl implements EleitorService {
     }
 
     @Override
-    public List<EleitorModel> buscarEleitores() {
-       List<EleitorModel> eleitorModelList= eleitorRepository.findAll();
+    public List<EleitorModel> buscarEleitores(String nome, String ra) {
+       List<EleitorModel> eleitorModelList= eleitorRepository.search(nome,ra);
         return eleitorModelList;
     }
 
