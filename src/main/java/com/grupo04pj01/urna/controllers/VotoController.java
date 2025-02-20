@@ -5,8 +5,10 @@ import com.grupo04pj01.urna.DTO.CandidatoVotosRecebidosDTO;
 import com.grupo04pj01.urna.DTO.VotoDTO;
 import com.grupo04pj01.urna.models.CandidatoModel;
 import com.grupo04pj01.urna.models.VotosModel;
+import com.grupo04pj01.urna.services.ApuracaoService;
 import com.grupo04pj01.urna.services.CandidatoService;
 import com.grupo04pj01.urna.services.VotoService;
+import com.grupo04pj01.urna.services.impl.ApuracaoServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequestMapping("/voto")
 public class VotoController {
     private final VotoService votoService;
+    private final ApuracaoService apuracaoService;
 
     @PostMapping
     public ResponseEntity<Void> votar(@RequestBody BuscaCandidatoDTO chapa){
@@ -30,7 +33,6 @@ public class VotoController {
     @GetMapping()
     public List<CandidatoVotosRecebidosDTO> buscaVotosPorCandidato(){
        List<CandidatoVotosRecebidosDTO> lista= votoService.contarVotosById();
-
         return lista;
     }
 

@@ -18,5 +18,4 @@ public interface VotoService {
 
     void deletarTodosVotos();
 
-
 }

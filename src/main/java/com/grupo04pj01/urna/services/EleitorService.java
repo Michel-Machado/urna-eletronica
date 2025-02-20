@@ -11,7 +11,7 @@ public interface EleitorService {
 
    ResponseCadastroEleitor criaEleitor(List<EleitorModel> eleitorModel );
 
-    List<EleitorModel> buscarEleitores();
+    List<EleitorModel> buscarEleitores(String nome, String ra);
 
     void liberarEleitor(String ra);
 
