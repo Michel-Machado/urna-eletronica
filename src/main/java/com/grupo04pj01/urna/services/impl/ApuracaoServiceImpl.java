@@ -1,5 +1,6 @@
 package com.grupo04pj01.urna.services.impl;
 
+import com.grupo04pj01.urna.DTO.ApuracaoDTO;
 import com.grupo04pj01.urna.DTO.CandidatoVotosRecebidosDTO;
 import com.grupo04pj01.urna.models.ApuracaoModel;
 import com.grupo04pj01.urna.models.UrnaModel;
@@ -23,13 +24,19 @@ public class ApuracaoServiceImpl implements ApuracaoService {
 
 
     @Override
-    public List<CandidatoVotosRecebidosDTO> verificaApuracao() {
+    public ApuracaoDTO verificaApuracao() {
         try {
             Long pk = 1L;
             Optional<ApuracaoModel> apuracao = apuracaoRepository.findById(pk);
             boolean apuracaoLiberada = validar(apuracao).getIsApuracaoLiberada();
             if (apuracaoLiberada){
-                return votoService.contarVotosById();
+                int totalGeral = 0;
+                List<CandidatoVotosRecebidosDTO> votos = votoService.contarVotosById();
+                for (CandidatoVotosRecebidosDTO votoPorCandidato: votos ) {
+                  totalGeral = totalGeral + votoPorCandidato.getTotalVotos();
+                }
+                ApuracaoDTO apuracaoResponse = new ApuracaoDTO(totalGeral, votos);
+                return apuracaoResponse;
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

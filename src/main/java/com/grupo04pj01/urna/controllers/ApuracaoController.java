@@ -1,5 +1,6 @@
 package com.grupo04pj01.urna.controllers;
 
+import com.grupo04pj01.urna.DTO.ApuracaoDTO;
 import com.grupo04pj01.urna.DTO.BuscaCandidatoDTO;
 import com.grupo04pj01.urna.DTO.CandidatoVotosRecebidosDTO;
 import com.grupo04pj01.urna.services.ApuracaoService;
@@ -21,9 +22,8 @@ public class ApuracaoController {
 
 
     @GetMapping()
-    public List<CandidatoVotosRecebidosDTO> buscaApuração(){
-        List<CandidatoVotosRecebidosDTO> lista= apuracaoService.verificaApuracao();
-
+    public ApuracaoDTO buscaApuração(){
+        ApuracaoDTO lista= apuracaoService.verificaApuracao();
         return lista;
     }
 
