@@ -5,6 +5,7 @@ import com.grupo04pj01.urna.DTO.CandidatoVotosRecebidosDTO;
 import com.grupo04pj01.urna.models.CandidatoModel;
 import com.grupo04pj01.urna.models.VotosModel;
 import com.grupo04pj01.urna.repositories.VotoRepository;
+import com.grupo04pj01.urna.services.ApuracaoService;
 import com.grupo04pj01.urna.services.VotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ public class VotoServiceImpl implements VotoService {
     private final VotoRepository votoRepository;
     private final UrnaServiceImpl urnaService;
     private final CandidatoServiceImpl candidatoService;
+
+
 
 
     @Override
@@ -43,6 +46,7 @@ public class VotoServiceImpl implements VotoService {
 
            listDTO.add(new CandidatoVotosRecebidosDTO(nome,votos));
         }
+
 
         return listDTO;
     }
