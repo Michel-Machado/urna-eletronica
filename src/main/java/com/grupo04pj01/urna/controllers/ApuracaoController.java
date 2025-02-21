@@ -27,6 +27,12 @@ public class ApuracaoController {
         return lista;
     }
 
+    @GetMapping("/status")
+    public ResponseEntity<Boolean> buscaStatusApuracao(){
+        Boolean status = apuracaoService.getStatus();
+        return ResponseEntity.ok().body(status);
+    }
+
     @PostMapping
     public ResponseEntity<Void> alterarLiberacaoUrna(@RequestParam Boolean isApuracaoLiberada){
         apuracaoService.alterarStatusApuracao(isApuracaoLiberada);

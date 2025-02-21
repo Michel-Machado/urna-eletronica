@@ -14,4 +14,5 @@ public interface ApuracaoService {
     void alterarStatusApuracao(Boolean isApuracaoLiberada);
 
 
+    Boolean getStatus();
 }

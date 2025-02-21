@@ -21,9 +21,6 @@ public class VotoServiceImpl implements VotoService {
     private final UrnaServiceImpl urnaService;
     private final CandidatoServiceImpl candidatoService;
 
-
-
-
     @Override
     public void votar(BuscaCandidatoDTO votoDTO) {
        if (!urnaService.verificaUrna()) throw new RuntimeException("Urna Bloqueada");

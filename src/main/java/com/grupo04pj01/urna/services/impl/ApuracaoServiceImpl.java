@@ -54,6 +54,11 @@ public class ApuracaoServiceImpl implements ApuracaoService {
        apuracaoRepository.save(model);
     }
 
+    @Override
+    public Boolean getStatus() {
+        return apuracaoRepository.findById(1L).get().getIsApuracaoLiberada();
+    }
+
     private ApuracaoModel validar(Optional<ApuracaoModel> objeto) {
         if (objeto.isPresent()) {
             return objeto.get();
