@@ -12,6 +12,7 @@ import com.grupo04pj01.urna.services.impl.ApuracaoServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,18 +26,21 @@ public class VotoController {
     private final ApuracaoService apuracaoService;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<Void> votar(@RequestBody BuscaCandidatoDTO chapa){
      votoService.votar(chapa);
      return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping()
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public List<CandidatoVotosRecebidosDTO> buscaVotosPorCandidato(){
        List<CandidatoVotosRecebidosDTO> lista= votoService.contarVotosById();
         return lista;
     }
 
     @DeleteMapping
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<Void> zerarUrna(){
         votoService.deletarTodosVotos();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
