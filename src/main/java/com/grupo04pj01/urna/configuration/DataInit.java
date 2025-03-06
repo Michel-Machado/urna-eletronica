@@ -22,25 +22,27 @@ public class DataInit implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-        if (urnaRepository.count() == 0) {
+        if (urnaRepository.findAll().isEmpty()) {
             UrnaModel urna = new UrnaModel(1L,false);
             urnaRepository.save(urna);
         }else {
             urnaRepository.findById(1L).get().setIsUrnaLiberada(false);
         }
 
-        if (apuracaoRepository.count() == 0){
+        if (apuracaoRepository.findAll().isEmpty()){
             ApuracaoModel apuracao = new ApuracaoModel(1L,false);
             apuracaoRepository.save(apuracao);
         } else {
             apuracaoRepository.findById(1L).get().setIsApuracaoLiberada(false);
         }
 
-        if ( userRepository.count() == 0){
-            UserModel user = new UserModel(1L, "admin", passwordEncoder.encode("123"), Role.ADMIN);
-            UserModel user2 = new UserModel(2L, "mesario",passwordEncoder.encode("1234"), Role.MESARIO);
-            userRepository.save(user);
-            userRepository.save(user2);
+        if ( userRepository.findAll().isEmpty()){
+            UserModel adm = new UserModel(1L, "admin", passwordEncoder.encode("0000"), Role.ADMIN);
+            UserModel mes = new UserModel(2L, "mesario",passwordEncoder.encode("0000"), Role.MESARIO);
+            UserModel ele = new UserModel(3L, "eleitor",passwordEncoder.encode("0000"), Role.ELEITOR);
+            userRepository.save(adm);
+            userRepository.save(mes);
+            userRepository.save(ele);
         }
 
         if (!candidatoRepository.findByChapa("0").isPresent()){

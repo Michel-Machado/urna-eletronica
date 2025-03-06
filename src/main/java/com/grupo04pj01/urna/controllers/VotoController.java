@@ -26,7 +26,7 @@ public class VotoController {
     private final ApuracaoService apuracaoService;
 
     @PostMapping
-    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    @PreAuthorize("hasAuthority('SCOPE_ELEITOR')")
     public ResponseEntity<Void> votar(@RequestBody BuscaCandidatoDTO chapa){
      votoService.votar(chapa);
      return ResponseEntity.status(HttpStatus.CREATED).build();

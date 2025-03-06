@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 public enum Role {
 
     ADMIN("admin"),
-    MESARIO("mesario");
+    MESARIO("mesario"),
+    ELEITOR("eleitor");
 
 
     private String role;

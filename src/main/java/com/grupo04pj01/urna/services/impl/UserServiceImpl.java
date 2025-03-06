@@ -2,6 +2,7 @@ package com.grupo04pj01.urna.services.impl;
 
 import com.grupo04pj01.urna.DTO.LoginRequest;
 import com.grupo04pj01.urna.DTO.LoginResponse;
+import com.grupo04pj01.urna.DTO.NovaSenhaRequest;
 import com.grupo04pj01.urna.models.UserModel;
 import com.grupo04pj01.urna.repositories.UserRepository;
 import com.grupo04pj01.urna.services.UserService;
@@ -50,6 +51,17 @@ public class UserServiceImpl implements UserService {
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
         return new LoginResponse(jwtValue, expiresIn);
+         }
+
+    @Override
+    public void changePassword(LoginRequest novaSenhaRequest) {
+        Optional<UserModel> user = userRepository.findByUserName(novaSenhaRequest.username());
+        if (user.isEmpty()){
+            throw new BadCredentialsException("Usuário ou senha inválidos");
+        }
+        user.get().setPassword(bCryptPasswordEncoder.encode(novaSenhaRequest.password()));
+        userRepository.save(user.get());
+
     }
 
 }
