@@ -8,6 +8,7 @@ import com.grupo04pj01.urna.services.VotoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class ApuracaoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<Void> alterarLiberacaoUrna(@RequestParam Boolean isApuracaoLiberada){
         apuracaoService.alterarStatusApuracao(isApuracaoLiberada);
 
