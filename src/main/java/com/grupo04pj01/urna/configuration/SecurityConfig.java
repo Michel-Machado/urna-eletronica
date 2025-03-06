@@ -1,6 +1,5 @@
 package com.grupo04pj01.urna.configuration;
 
-import com.fasterxml.jackson.databind.util.Converter;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -14,17 +13,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.*;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.util.Collection;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -43,6 +37,7 @@ public class SecurityConfig {
             http.authorizeHttpRequests(authorize -> authorize
                             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                             .requestMatchers(HttpMethod.GET, "/apuracao").permitAll()
+                            .requestMatchers(HttpMethod.DELETE,"/reset").permitAll()
                             .anyRequest().authenticated())
                             .csrf(csrf -> csrf.disable())
                             .oauth2ResourceServer(oauth2 ->oauth2.jwt(Customizer.withDefaults()))
