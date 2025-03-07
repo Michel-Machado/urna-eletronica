@@ -1,22 +1,19 @@
 package com.grupo04pj01.urna.services.impl;
 
-import com.grupo04pj01.urna.DTO.ApuracaoDTO;
-import com.grupo04pj01.urna.DTO.CandidatoVotosRecebidosDTO;
-import com.grupo04pj01.urna.models.ApuracaoModel;
+import com.grupo04pj01.urna.DTO.SenhaRequest;
 import com.grupo04pj01.urna.models.UserModel;
-import com.grupo04pj01.urna.repositories.ApuracaoRepository;
 import com.grupo04pj01.urna.repositories.UserRepository;
 import com.grupo04pj01.urna.services.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ResetServiceImpl implements ResetService {
+
 
     private final EleitorService eleitorService;
     private final VotoService votoService;
@@ -25,9 +22,14 @@ public class ResetServiceImpl implements ResetService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    @Value("${app.key}")
+    private String SENHA_ADM ;
 
     @Override
-    public void reset() {
+    public void reset(SenhaRequest senha) {
+        if (!senha.senha().matches(SENHA_ADM)){
+            throw new BadCredentialsException("Senha de reset incorreta, contate o desenvolvedor do sistema");
+        }
         eleitorService.deleteAll();
         votoService.deletarTodosVotos();
         eleitorPresenteService.limpaListaPresenca();
