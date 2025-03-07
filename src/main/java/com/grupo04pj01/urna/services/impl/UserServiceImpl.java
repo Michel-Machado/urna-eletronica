@@ -4,6 +4,7 @@ import com.grupo04pj01.urna.DTO.LoginRequest;
 import com.grupo04pj01.urna.DTO.LoginResponse;
 import com.grupo04pj01.urna.DTO.NovaSenhaRequest;
 import com.grupo04pj01.urna.models.UserModel;
+import com.grupo04pj01.urna.models.enums.Role;
 import com.grupo04pj01.urna.repositories.UserRepository;
 import com.grupo04pj01.urna.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,11 +35,15 @@ public class UserServiceImpl implements UserService {
         if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest,bCryptPasswordEncoder)){
             throw new BadCredentialsException("Usuário ou senha inválidos");
         }
+        long expiresIn;
 
         var now = Instant.now();
-        var expiresIn = 300L;
         var scope = user.get().getRole();
-
+        if (user.get().getRole() == Role.ADMIN) {
+             expiresIn = 300L;
+        }else {
+             expiresIn = 28800L;
+        }
         var claims = JwtClaimsSet.builder()
 
                 .issuer("urna")
