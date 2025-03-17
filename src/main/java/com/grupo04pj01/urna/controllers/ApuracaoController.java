@@ -35,6 +35,13 @@ public class ApuracaoController {
 
         return ResponseEntity.ok().build();
     }
+    
+    @GetMapping("/status")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
+    public  ResponseEntity<Boolean> buscarStatusApuracao(){
+       boolean status = apuracaoService.getStatusApuracao();
+       return ResponseEntity.ok().body(status);
+    }
 
 
 }

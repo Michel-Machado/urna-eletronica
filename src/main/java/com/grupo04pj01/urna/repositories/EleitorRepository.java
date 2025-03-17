@@ -16,4 +16,10 @@ public interface EleitorRepository extends JpaRepository<EleitorModel, Long> {
     List<EleitorModel> search(@Param("nome") String nome, @Param("ra") String ra);
 
     Optional<EleitorModel> findEleitorModelByRa(String ra);
+
+    Optional<EleitorModel> findEleitorModelByRaIgnoreCase(String ra);
+
+    @Query(nativeQuery = true, value = "SELECT MAX(numero)  FROM eleitores_tb  where classe =:sala")
+    Integer buscaMaiorNumero(@Param("sala") String sala);
+
 }

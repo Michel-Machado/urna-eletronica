@@ -38,6 +38,7 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                             .requestMatchers(HttpMethod.GET, "/apuracao").permitAll()
                             .requestMatchers(HttpMethod.DELETE,"/reset").permitAll()
+                            .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                             .anyRequest().authenticated())
                             .csrf(csrf -> csrf.disable())
                             .oauth2ResourceServer(oauth2 ->oauth2.jwt(Customizer.withDefaults()))

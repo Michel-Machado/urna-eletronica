@@ -1,16 +1,21 @@
 package com.grupo04pj01.urna.DTO;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseCadastroEleitor {
+@Builder
 
-    public List<EleitoresCadastradosDTO> registrados;
+public class EleitoresResponseDTO {
+
+    public Long id;
+    public String nome;
+    public String ra;
 
 }

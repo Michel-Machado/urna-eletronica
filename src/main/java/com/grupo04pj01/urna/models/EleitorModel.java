@@ -17,7 +17,10 @@ public class EleitorModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-    public String ra;
     public String nome;
+    public String classe;
+    public int numero;
+    public String ra;
+
 
 }
