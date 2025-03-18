@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.Writer;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -33,8 +34,9 @@ public class EleitorServiceImpl implements EleitorService {
 
     @Override
     public ResponseCadastroEleitor criaEleitor(EleitoresCadastrarDTO listaNovosEleitores) {
-            var numero =  gerarNovoNumero(listaNovosEleitores.getClasse());
-            var classe = listaNovosEleitores.getClasse().toUpperCase();
+        eleitoresCadastrados.clear();
+        var numero =  gerarNovoNumero(listaNovosEleitores.getClasse());
+        var classe = listaNovosEleitores.getClasse().toUpperCase();
 
         for (String novoEleitor: listaNovosEleitores.getNomes()) {
             String ra = gerarRa(classe, numero);
@@ -45,19 +47,16 @@ public class EleitorServiceImpl implements EleitorService {
                     .classe(classe)
                     .nome(novoEleitor.toUpperCase())
                     .build();
+
             validaNovoEleitor(eleitorCadastrar);
 
             eleitorRepository.save(eleitorCadastrar);
             eleitoresCadastrados.add(new EleitoresCadastradosDTO(eleitorCadastrar.ra, eleitorCadastrar.nome));
             numero = numero + 1;
-
         }
-
         ResponseCadastroEleitor response = new ResponseCadastroEleitor(eleitoresCadastrados);
 
-
         return response;
-
     }
 
     private void validaNovoEleitor(EleitorModel eleitorCadastrar) {
@@ -132,6 +131,12 @@ public class EleitorServiceImpl implements EleitorService {
     @Override
     public void deleteAll() {
         eleitorRepository.deleteAll();
+    }
+
+    public void exportarCsv(Writer writer){
+        List<EleitorModel> eleitores = eleitorRepository.findAll();
+
+
     }
 
     private EleitorModel validaEleitor(Optional<EleitorModel> eleitorModelOptional){
