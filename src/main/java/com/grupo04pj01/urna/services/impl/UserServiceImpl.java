@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         var now = Instant.now();
         var scope = user.get().getRole();
         if (user.get().getRole() == Role.ADMIN) {
-             expiresIn = 300L;
+             expiresIn = 28800L;
         }else {
              expiresIn = 28800L;
         }
