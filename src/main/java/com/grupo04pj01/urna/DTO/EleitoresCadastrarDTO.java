@@ -9,8 +9,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseCadastroEleitor {
+public class EleitoresCadastrarDTO {
 
-    public List<EleitoresCadastradosDTO> registrados;
+    private String classe;
+    private List<String> nomes;
+
 
 }

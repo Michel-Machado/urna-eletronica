@@ -1,4 +1,4 @@
-package com.grupo04pj01.urna.models;
+package com.grupo04pj01.urna.DTO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,22 +6,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-@Table(name = "eleitores_tb")
-public class EleitorModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EleitoresResponseDTO {
+
     public Long id;
-    @Column(unique = true)
     public String nome;
-    public String classe;
-    public int numero;
     public String ra;
-
 
 }
