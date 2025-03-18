@@ -5,11 +5,13 @@ import com.grupo04pj01.urna.DTO.EleitoresResponseDTO;
 import com.grupo04pj01.urna.DTO.ResponseCadastroEleitor;
 import com.grupo04pj01.urna.models.EleitorModel;
 import com.grupo04pj01.urna.services.EleitorService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -64,5 +66,16 @@ public class EleitorController {
     public ResponseEntity<EleitorModel> atualizaEleitor(@RequestBody EleitorModel eleitorModel){
         EleitorModel eleitorAlterado = eleitorService.update(eleitorModel);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(eleitorAlterado);
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<Void> exportarCadastroEleitor(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=eleitores.csv");
+        eleitorService.exportarCsv(response.getWriter());
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+
     }
 }
