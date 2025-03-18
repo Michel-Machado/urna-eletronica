@@ -22,4 +22,5 @@ public interface EleitorRepository extends JpaRepository<EleitorModel, Long> {
     @Query(nativeQuery = true, value = "SELECT MAX(numero)  FROM eleitores_tb  where classe =:sala")
     Integer buscaMaiorNumero(@Param("sala") String sala);
 
+    Optional<EleitorModel> findByNomeAndClasse(String nome, String classe);
 }

@@ -27,7 +27,6 @@ public class EleitorServiceImpl implements EleitorService {
     private final EleitorPresenteRepository eleitorPresenteRepository;
     private final UrnaServiceImpl urnaService;
     private final ModelMapper mapper;
-    private final ModelMapper modelMapper;
     private List<EleitoresCadastradosDTO> eleitoresNaoCadastrados = new ArrayList<>();
     private List<EleitoresCadastradosDTO> eleitoresCadastrados = new ArrayList<>();
 
@@ -46,6 +45,7 @@ public class EleitorServiceImpl implements EleitorService {
                     .classe(classe)
                     .nome(novoEleitor.toUpperCase())
                     .build();
+            validaNovoEleitor(eleitorCadastrar);
 
             eleitorRepository.save(eleitorCadastrar);
             eleitoresCadastrados.add(new EleitoresCadastradosDTO(eleitorCadastrar.ra, eleitorCadastrar.nome));
@@ -58,6 +58,15 @@ public class EleitorServiceImpl implements EleitorService {
 
         return response;
 
+    }
+
+    private void validaNovoEleitor(EleitorModel eleitorCadastrar) {
+        var classe = eleitorCadastrar.getClasse().toUpperCase();
+        var nome = eleitorCadastrar.getNome();
+        Optional<EleitorModel> validacao = eleitorRepository.findByNomeAndClasse( nome,classe);
+        if(validacao.isPresent()){
+            throw new BusinessException("nome já cadastrado");
+        }
     }
 
     @Override
@@ -115,7 +124,7 @@ public class EleitorServiceImpl implements EleitorService {
     public EleitoresResponseDTO buscaEleitorByRa(String ra){
         Optional<EleitorModel> eleitor= eleitorRepository.findEleitorModelByRaIgnoreCase(ra);
         EleitorModel model = validaEleitor(eleitor);
-        EleitoresResponseDTO eleitorResponse = modelMapper.map(model, EleitoresResponseDTO.class);
+        EleitoresResponseDTO eleitorResponse = mapper.map(model, EleitoresResponseDTO.class);
 
         return eleitorResponse;
     }
