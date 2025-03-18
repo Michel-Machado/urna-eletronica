@@ -11,11 +11,12 @@ import com.grupo04pj01.urna.models.EleitorPresenteModel;
 import com.grupo04pj01.urna.repositories.EleitorPresenteRepository;
 import com.grupo04pj01.urna.repositories.EleitorRepository;
 import com.grupo04pj01.urna.services.EleitorService;
-import io.swagger.v3.core.converter.ModelConverter;
+import com.opencsv.CSVWriter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.Writer;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -59,14 +60,7 @@ public class EleitorServiceImpl implements EleitorService {
         return response;
     }
 
-    private void validaNovoEleitor(EleitorModel eleitorCadastrar) {
-        var classe = eleitorCadastrar.getClasse().toUpperCase();
-        var nome = eleitorCadastrar.getNome();
-        Optional<EleitorModel> validacao = eleitorRepository.findByNomeAndClasse( nome,classe);
-        if(validacao.isPresent()){
-            throw new BusinessException("nome já cadastrado");
-        }
-    }
+
 
     @Override
     public List<EleitoresResponseDTO> buscarEleitores(String nome, String ra) {
@@ -111,8 +105,8 @@ public class EleitorServiceImpl implements EleitorService {
     public EleitorModel update(EleitorModel eleitorEditado) {
         EleitorModel eleitorVerificado = validaUpdadeEleitor(eleitorEditado);
 
-        eleitorVerificado.setNome(eleitorEditado.getNome());
-        eleitorVerificado.setRa(eleitorEditado.getRa());
+        eleitorVerificado.setNome(eleitorEditado.getNome().toUpperCase());
+        eleitorVerificado.setRa(eleitorEditado.getRa().toUpperCase());
 
         eleitorRepository.save(eleitorVerificado);
 
@@ -133,10 +127,33 @@ public class EleitorServiceImpl implements EleitorService {
         eleitorRepository.deleteAll();
     }
 
-    public void exportarCsv(Writer writer){
+    @Override
+    public void exportarCsv(Writer writer) throws IOException {
         List<EleitorModel> eleitores = eleitorRepository.findAll();
 
+        try (CSVWriter csvWriter = new CSVWriter(writer, ';', CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END)) {
+            String[] header = {"Nome", "Ra", "Classe"};
+            csvWriter.writeNext(header);
+            for (EleitorModel eleitor : eleitores) {
+                String[] body = {
+                        String.valueOf(eleitor.getNome()),
+                        String.valueOf(eleitor.getRa()),
+                        String.valueOf(eleitor.classe)
+                };
 
+                csvWriter.writeNext(body);
+            }
+
+        }
+    }
+
+    private void validaNovoEleitor(EleitorModel eleitorCadastrar) {
+        var classe = eleitorCadastrar.getClasse().toUpperCase();
+        var nome = eleitorCadastrar.getNome();
+        Optional<EleitorModel> validacao = eleitorRepository.findByNomeAndClasse( nome,classe);
+        if(validacao.isPresent()){
+            throw new BusinessException("nome já cadastrado");
+        }
     }
 
     private EleitorModel validaEleitor(Optional<EleitorModel> eleitorModelOptional){
